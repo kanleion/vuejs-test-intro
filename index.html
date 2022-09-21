@@ -16,25 +16,14 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    evt: "submit",
-                    counter: 1
+
                 };
             },
             methods: {
-                submit() {
-                    this.counter++;
-                },
-                minus() {
-                    this.counter--;
-                }
+
             },
             template: `
-              <form v-on:[evt].prevent.stop>
-                <button v-on:click="minus">-</button>
-                <button>{{counter}}</button>
-                <button v-on:click="submit">+</button>                
-              </form>
-              
+
             
             `
         }).mount("#app");
