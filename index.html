@@ -16,13 +16,31 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    text: "Hola Vue",
+                    text: "Puerta cerrada",
+                    open: false
                 };
             },
 
+            watch: {
+                //tiene que tener el mismo nombre de la variable text
+                //puede rescibir variables
+                //es importante que un watcher solo haga una cosa y que luego llame un metodo pero hasta alli  
+                open(value) {
+                    if (value) {
+                        this.text = "Puerta abierta"
+                    } else {
+                        this.text = "Puerta cerrada"
+                    }
+                }
+            },
+            computed: {
+                label() {
+                    return this.open ? "Cerrar" : "Abrir"
+                }
+            },
             template: `
               <div>{{ text }}</div>
-
+              <button @click="open = !open">{{ label }}</button>
             `
         }).mount("#app");
     </script>
