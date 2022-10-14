@@ -16,8 +16,9 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    text: "Puerta cerrada",
-                    open: false
+                    text: "Accede a tu cuenta",
+                    open: false,
+                    username: ""
                 };
             },
 
@@ -27,23 +28,76 @@
                 //es importante que un watcher solo haga una cosa y que luego llame un metodo pero hasta alli  
                 open(value) {
                     if (value) {
-                        this.text = "Puerta abierta"
+                        this.text = "Accede a tu cuenta";
+
                     } else {
-                        this.text = "Puerta cerrada"
+                        this.text = "Cierra sesión";
+                        this.username = "";
                     }
                 }
             },
             computed: {
                 label() {
-                    return this.open ? "Cerrar" : "Abrir"
+                    return this.open ? "Salir" : "Acceder"
+                },
+
+                styles() {
+                    return this.open ? ['open'] : ['close']
                 }
             },
             template: `
-              <div>{{ text }}</div>
-              <button @click="open = !open">{{ label }}</button>
+              <div class="container" :class="styles">
+                <h2> {{ text }} </h2>
+                <div v-if="open">
+                  <p> Hola, {{username}}</p>  
+                </div>
+
+                <div v-else>
+                  <label>Username</label> 
+                  <input type="text" v-model="username"/>
+                </div>
+                <button @click="open = !open">
+                  <div v-if="!open">Acceder</div>
+                  <div v-else>Salir</div>  
+                </button>
+              </div>
             `
         }).mount("#app");
     </script>
+    <style>
+        html,
+        body {
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        #app,
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+        
+        button {
+            margin-top: 24px;
+            border: none;
+            background-color: white;
+            padding: 8px 24px;
+            border-radius: 12px;
+        }
+        
+        .close {
+            background-color: #eca1a6;
+        }
+        
+        .open {
+            background-color: #b5e7a0;
+        }
+    </style>
 </body>
 
 </html>
